@@ -13,7 +13,7 @@ import validator from "validator";
 import { fileURLToPath } from "url";
 import path from "path";
 
-// ✅ Local imports
+// ✅ Local import
 import connectDb from "./config/connection.js";
 import handleError from "./utils/handleError.js";
 import productrouter from "./routes/productRoutes.js";
