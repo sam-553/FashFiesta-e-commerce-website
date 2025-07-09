@@ -1,0 +1,69 @@
+# ==========================
+# Node modules
+/backend/node_modules
+/frontend/node_modules
+node_modules/
+
+# ==========================
+# Next.js build output
+/frontend/.next
+/frontend/out
+.next/
+
+# ==========================
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==========================
+# Environment variables
+/backend/config/config.env
+.env
+.env.*.local
+
+# ==========================
+# System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# ==========================
+# IDE settings
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# ==========================
+# Package locks (optional)
+package-lock.json/
+yarn.lock
+
+# ==========================
+# Coverage
+coverage/
+
+# ==========================
+# Build artifacts
+dist/
+build/
+tmp/
+temp/
+
+# ==========================
+# Local test databases
+*.sqlite
+
+# ==========================
+# Other generated files
+*.tgz
+
+# ==========================
+# Optional: ignore uploads if needed
+frontend/public/images
+# /backend/uploads
