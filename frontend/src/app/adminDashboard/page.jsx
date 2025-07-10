@@ -39,8 +39,8 @@ const AdminDashboard = () => {
   }, [dispatch])
   const totalProducts=products.length;
   const totalOrders=orders.length;
-  const outOfStock=products.filter(products=>products.stock===0).length
-  const inStock = products.filter(product => product.stock > 0).length;
+ const outOfStock = products.filter(product => product.stock === 0).length;
+const inStock = products.filter(product => product.stock > 0).length;
 
   const totalReviews=products.reduce((acc,products)=>acc+(products.reviews?.length||0),0)
   
