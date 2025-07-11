@@ -220,4 +220,5 @@ const userSlice = createSlice({
 // Exports
 
 export const { removeError, removeSuccess, resetUser } = userSlice.actions;
+export const userActions = userSlice.actions;
 export default userSlice.reducer;
