@@ -22,7 +22,7 @@ const __dirname = path.dirname(__filename);
 
 // Configure environment
 dotenv.config({
-    path: process.env.NODE_ENV !== "PRODUCTION" ? "./backend/config/config.env" : undefined,
+    path: process.env.NODE_ENV !== "PRODUCTION" ? "config/config.env" : undefined,
 });
 
 // Connect to MongoDB
@@ -55,17 +55,22 @@ app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 },
 }));
 
+// ✅ Health check route to avoid 404 on "/"
+app.get("/", (req, res) => {
+    res.send("✅ Backend server is running on http://localhost:" + port);
+});
+
 // API Routes
 app.use("/product", productrouter);
 app.use("/user", userrouter);
 app.use("/order", orderrouter);
 app.use("/payment", paymentrouter);
 
+// Serving frontend in production
 if (process.env.NODE_ENV === "PRODUCTION") {
-    const frontendPath = path.join(__dirname, "../frontend/out"); 
+    const frontendPath = path.join(__dirname, "../frontend/out");
     app.use(express.static(frontendPath));
 
-    
     app.get("*", (req, res) => {
         res.sendFile(path.resolve(frontendPath, "index.html"));
     });
@@ -76,7 +81,7 @@ app.use(HandleErrorMiddleware);
 
 // Start Server
 app.listen(port, () => {
-    console.log(`✅ Backend server running on http://localhost:${port}`);
+    console.log(` Backend server running on port ${port}`);
 });
 
 export default app;
