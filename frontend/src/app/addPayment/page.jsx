@@ -2,13 +2,14 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import Navbar from '../navbar/page';
-import Footer from '../footer/page';
-import Checkoutpath from '../checkoutPath/page';
+import Navbar from '@/app/navbar/page';
+import Footer from '@/app/footer/page';
+
 import { useSelector } from 'react-redux';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import Checkoutpath from '../checkoutPath/page';
 
 
 const PaymentPage = () => {

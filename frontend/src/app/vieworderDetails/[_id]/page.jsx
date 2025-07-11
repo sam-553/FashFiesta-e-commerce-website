@@ -3,10 +3,11 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import Navbar from '../../navbar/page';
-import Footer from '../../footer/page';
+
 import { Loader2, PackageCheck, ShoppingCart, Truck, IndianRupee } from 'lucide-react';
 import { getSingleOrder } from '@/app/features/order/orderSlice';
+import Navbar from '@/app/navbar/page';
+import Footer from '@/app/footer/page';
 
 const OrderDetailsPage = () => {
     const params = useParams();
