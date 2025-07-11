@@ -10,7 +10,7 @@ const extractError = (error, fallback) =>
     error.response?.data?.message || error.response?.data?.error || fallback;
 
 // Thunks
-const register = createAsyncThunk("user/register", async (userdata, { rejectWithValue }) => {
+export const register = createAsyncThunk("user/register", async (userdata, { rejectWithValue }) => {
     try {
         const response = await axios.post("/user/registerUser", userdata);
         return response.data;
@@ -19,7 +19,7 @@ const register = createAsyncThunk("user/register", async (userdata, { rejectWith
     }
 });
 
-const login = createAsyncThunk("user/login", async (userdata, { rejectWithValue }) => {
+export const login = createAsyncThunk("user/login", async (userdata, { rejectWithValue }) => {
     try {
         const response = await axios.post("/user/loginUser", userdata);
         return response.data;
@@ -28,7 +28,7 @@ const login = createAsyncThunk("user/login", async (userdata, { rejectWithValue 
     }
 });
 
-const loadUser = createAsyncThunk("user/loadUser", async (_, { rejectWithValue }) => {
+export const loadUser = createAsyncThunk("user/loadUser", async (_, { rejectWithValue }) => {
     try {
         const response = await axios.get("/user/getuserDetails");
         return response.data;
@@ -37,7 +37,7 @@ const loadUser = createAsyncThunk("user/loadUser", async (_, { rejectWithValue }
     }
 });
 
-const logout = createAsyncThunk("user/logout", async (_, { rejectWithValue }) => {
+export const logout = createAsyncThunk("user/logout", async (_, { rejectWithValue }) => {
     try {
         const response = await axios.post("/user/logout");
         return response.data;
@@ -46,7 +46,7 @@ const logout = createAsyncThunk("user/logout", async (_, { rejectWithValue }) =>
     }
 });
 
-const updateUser = createAsyncThunk("user/update", async (userdata, { rejectWithValue }) => {
+export const updateUser = createAsyncThunk("user/update", async (userdata, { rejectWithValue }) => {
     try {
         const response = await axios.put("/user/updateProfile", userdata);
         return response.data;
@@ -55,7 +55,7 @@ const updateUser = createAsyncThunk("user/update", async (userdata, { rejectWith
     }
 });
 
-const requestResetPassword = createAsyncThunk("user/requestResetPassword", async (userdata, { rejectWithValue }) => {
+export const requestResetPassword = createAsyncThunk("user/requestResetPassword", async (userdata, { rejectWithValue }) => {
     try {
         const response = await axios.post("/user/requestresetpassword", userdata);
         return response.data;
@@ -64,7 +64,7 @@ const requestResetPassword = createAsyncThunk("user/requestResetPassword", async
     }
 });
 
-const updatePassword = createAsyncThunk("user/updatePassword", async (userdata, { rejectWithValue }) => {
+export const updatePassword = createAsyncThunk("user/updatePassword", async (userdata, { rejectWithValue }) => {
     try {
         const response = await axios.put("/user/updatePassword", userdata);
         return response.data;
@@ -73,7 +73,7 @@ const updatePassword = createAsyncThunk("user/updatePassword", async (userdata, 
     }
 });
 
-const resetPassword =  createAsyncThunk(
+export const resetPassword =  createAsyncThunk(
   'user/resetPassword',
   async ({ token, password, confirmPassword }, thunkAPI) => {
     try {
@@ -218,18 +218,6 @@ const userSlice = createSlice({
 });
 
 // Exports
-module.exports = {
-    userReducer: userSlice.reducer,
-    removeError: userSlice.actions.removeError,
-    removeSuccess: userSlice.actions.removeSuccess,
-    resetUser: userSlice.actions.resetUser,
-    register,
-    login,
-    loadUser,
-    logout,
-    updateUser,
-    requestResetPassword,
-    updatePassword,
-    resetPassword,
-    extractError,
-};
+
+export const { removeError, removeSuccess, resetUser } = userSlice.actions;
+export default userSlice.reducer;
