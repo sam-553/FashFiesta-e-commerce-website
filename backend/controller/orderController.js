@@ -2,62 +2,62 @@ import Order from '../model/ordermodel.js';
 import Product from '../model/productmodel.js';
 import User from '../model/usermodel.js';
 import handleasyncError from '../middlewear/handleasyncError.js';
-import handleError from '../utils/handleError.js';
+import HandleError from '../utils/HandleError.js';
 
 
 // Create New Order
- const createNewOrder=handleasyncError(async(req,res,next)=>{
-const {shippingInfo,orderItems,paymentInfo,itemPrice,taxPrice,shippingPrice,totalPrice}=req.body;
+const createNewOrder = handleasyncError(async (req, res, next) => {
+    const { shippingInfo, orderItems, paymentInfo, itemPrice, taxPrice, shippingPrice, totalPrice } = req.body;
 
-const order=await Order({
-    shippingInfo,
-    orderItems,
-    paymentInfo,
-    itemPrice,
-    taxPrice,
-    shippingPrice,
-    totalPrice,
-    paidAt:Date.now(),
-    user:req.user._id
-}).save()
-res.status(201).json({
-    success:true,
-    order
-})
+    const order = await Order({
+        shippingInfo,
+        orderItems,
+        paymentInfo,
+        itemPrice,
+        taxPrice,
+        shippingPrice,
+        totalPrice,
+        paidAt: Date.now(),
+        user: req.user._id
+    }).save()
+    res.status(201).json({
+        success: true,
+        order
+    })
 })
 //Getting single Order
- const getSingleOrder=handleasyncError(async(req,res,next)=>{
- const order=await Order.findById(req.params.id).populate("user","name email")
- if(!order){
-    return next(new HandleError("No order found",404));
- }
- res.status(200).json({
-    success:true,
-    order
- })
+const getSingleOrder = handleasyncError(async (req, res, next) => {
+    const order = await Order.findById(req.params.id).populate("user", "name email")
+    if (!order) {
+        return next(new HandleError("No order found", 404));
+    }
+    res.status(200).json({
+        success: true,
+        order
+    })
 })
 
 //All my orders
- const allMyOrders=handleasyncError(async(req,res,next)=>{
- const orders=await Order.find({user:req.user._id});
- if(!orders){
-    return next(new HandleError("No order found",404));
-}
-res.status(200).json({
-    success:true,
-    orders
-})
+const allMyOrders = handleasyncError(async (req, res, next) => {
+    const orders = await Order.find({ user: req.user._id });
+    if (!orders) {
+        return next(new HandleError("No order found", 404));
+    }
+    res.status(200).json({
+        success: true,
+        orders
+    })
 })
 
 //Getting all orders
- const getAllOrders=handleasyncError(async(req,res,next)=>{
-    const orders=await Order.find();
-    let totalAmount=0;
-    orders.forEach(order=>{
-        totalAmount+=order.totalPrice
+const getAllOrders = handleasyncError(async (req, res, next) => {
+    const orders = await Order.find();
+    let totalAmount = 0;
+    orders.forEach(order => {
+        totalAmount += order.totalPrice
     })
     res.status(200).json({
-        success:true,
+        success: true,
         orders,
         totalAmount
     })
@@ -68,16 +68,16 @@ const updateOrderStatus = handleasyncError(async (req, res, next) => {
     const order = await Order.findById(req.params.id);
 
     if (!order) {
-        return next(new handleError("No order found", 404));
+        return next(new HandleError("No order found", 404));
     }
 
     if (order.orderStatus === 'Delivered') {
-        return next(new handleError("This order has already been delivered", 400));
+        return next(new HandleError("This order has already been delivered", 400));
     }
 
     const { status } = req.body;
     if (!status) {
-        return next(new handleError("Status is required", 400));
+        return next(new HandleError("Status is required", 400));
     }
 
     // Ensure all products exist and have sufficient stock
@@ -86,11 +86,11 @@ const updateOrderStatus = handleasyncError(async (req, res, next) => {
 
         if (!product) {
             console.error(`Product with id ${item.product} not found for order ${order._id}`);
-            return next(new handleError(`Product with id ${item.product} not found`, 404));
+            return next(new HandleError(`Product with id ${item.product} not found`, 404));
         }
 
         if (product.stock < item.quantity) {
-            return next(new handleError(`Insufficient stock for product: ${product.name}`, 400));
+            return next(new HandleError(`Insufficient stock for product: ${product.name}`, 400));
         }
     }
 
@@ -136,19 +136,19 @@ async function updateQuantity(id, quantity) {
 
 
 //Delete Order
- const deleteOrder = handleasyncError(async (req, res, next) => {
+const deleteOrder = handleasyncError(async (req, res, next) => {
     const { id } = req.params;
     console.log("Delete request for order ID:", id);
 
     // ✅ Validate ObjectId before querying
-    
+
     const order = await Order.findById(id);
     if (!order) {
-        return next(new handleError("No order found", 404));
+        return next(new HandleError("No order found", 404));
     }
 
     if (order.orderStatus !== 'Delivered') {
-        return next(new handleError("This order is under processing and cannot be deleted", 403));
+        return next(new HandleError("This order is under processing and cannot be deleted", 403));
     }
 
     await Order.deleteOne({ _id: id });
@@ -160,4 +160,4 @@ async function updateQuantity(id, quantity) {
 });
 
 
-export {createNewOrder,getSingleOrder,allMyOrders,getAllOrders,updateOrderStatus,deleteOrder}
+export { createNewOrder, getSingleOrder, allMyOrders, getAllOrders, updateOrderStatus, deleteOrder }

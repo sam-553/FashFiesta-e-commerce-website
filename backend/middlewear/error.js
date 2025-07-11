@@ -1,7 +1,4 @@
-import HandleError from 'backend/utils/handleError.js';
-
-
-const handleErrorMiddleware = (err, req, res, next) => {
+const HandleErrorMiddleware = (err, req, res, next) => {
   let statusCode = err.statusCode || 500;
   let message = err.message || "Internal Server Error";
 
@@ -18,7 +15,7 @@ const handleErrorMiddleware = (err, req, res, next) => {
     statusCode = 400;
   }
 
-  // Optional: Handle JWT token errors
+  // JWT errors
   if (err.name === 'JsonWebTokenError') {
     message = 'Invalid token. Please try again.';
     statusCode = 401;
@@ -35,4 +32,4 @@ const handleErrorMiddleware = (err, req, res, next) => {
   });
 };
 
-export default handleErrorMiddleware;
+export default HandleErrorMiddleware;
