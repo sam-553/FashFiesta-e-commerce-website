@@ -1,4 +1,4 @@
-import HandleError from "../utils/HandleError.js";
+import HandleError from "../utils/handleError.js";
 import handleasyncError from "./handleasyncError.js";
 import jwt from "jsonwebtoken";
 import User from "../model/usermodel.js";

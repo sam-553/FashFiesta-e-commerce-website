@@ -6,7 +6,7 @@ import sendEmail from '../utils/sendEmail.js';
 import crypto from 'crypto';
 import cloudinaryModule from 'cloudinary';
 import bcrypt from 'bcryptjs';
-import HandleError from '../utils/HandleError.js';
+import HandleError from '../utils/handleError.js';
 
 const cloudinary = cloudinaryModule.v2;
 

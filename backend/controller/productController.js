@@ -4,7 +4,7 @@ import Model from '../model/productmodel.js';
 import APIFunctionality from '../utils/apiFunctionality.js';
 import User from '../model/usermodel.js';
 import cloudinaryModule from 'cloudinary';
-import HandleError from '../utils/HandleError.js';
+import HandleError from '../utils/handleError.js';
 
 const cloudinary = cloudinaryModule.v2;
 
