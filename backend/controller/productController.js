@@ -1,9 +1,10 @@
 import handleasyncError from '../middlewear/handleasyncError.js';
 import Model from '../model/productmodel.js';
-import HandleError from '../utils/HandleError.js';
+
 import APIFunctionality from '../utils/apiFunctionality.js';
 import User from '../model/usermodel.js';
 import cloudinaryModule from 'cloudinary';
+import HandleError from '../utils/HandleError.js';
 
 const cloudinary = cloudinaryModule.v2;
 
