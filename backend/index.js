@@ -22,7 +22,7 @@ const __dirname = path.dirname(__filename);
 
 // Configure environment
 dotenv.config({
-    path: process.env.NODE_ENV !== "PRODUCTION" ? "config/config.env" : undefined,
+    path: process.env.NODE_ENV !== "PRODUCTION" ? "./backend/config/config.env" : undefined,
 });
 
 // Connect to MongoDB
@@ -81,7 +81,7 @@ app.use(HandleErrorMiddleware);
 
 // Start Server
 app.listen(port, () => {
-    console.log(` Backend server running on port ${port}`);
+    console.log(`✅ Backend server running on http://localhost:${port}`);
 });
 
 export default app;
