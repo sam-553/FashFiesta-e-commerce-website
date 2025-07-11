@@ -22,7 +22,7 @@ const OrderDetailsPage = () => {
     return (
         <>
             <Navbar />
-            <main className="container mx-auto px-4 py-12 mt-16 max-w-3xl min-h-screen animate-fade-in bg-gradient-to-br from-[#f8fafc] to-white">
+            <main className="container mx-auto px-4 py-12 mt-16 max-w-3xl min-h-screen animate-fade-in bg-gradient-to-br from-[#f8fafc] to-white  ">
                 <h1 className="text-4xl sm:text-5xl font-extrabold text-center text-gray-800 mb-10 tracking-tight drop-shadow">
                     Order Details
                 </h1>
