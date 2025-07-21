@@ -2,10 +2,9 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 
-   if(process.env.NODE_ENV!='PRODUCTION'){
-      dotenv.config({ path: "./backend/config/config.env" });
    
-      }
+      dotenv.config({ path: "config" });
+   
    
 
 
