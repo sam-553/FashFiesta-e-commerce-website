@@ -10,18 +10,19 @@ export const getproduct = createAsyncThunk(
   async ({ keyword = '', page = 1, category = '' }, thunkAPI) => {
     try {
       const query = [
-        keyword && `keyword=${keyword}`,
+        keyword && `keyword=${encodeURIComponent(keyword)}`,
         `page=${page}`,
-        category && `category=${category}`,
+        category && `category=${encodeURIComponent(category)}`,
       ].filter(Boolean).join('&');
 
-      const { data } = await axios.get(`${BASE_URL}/getAllproduct?${query}`);
+      const { data } = await axios.get(`${BASE_URL}/getAllProduct?${query}`);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data?.message || 'An error occurred');
     }
   }
 );
+
 
 // Fetch product details
 export const getproductDetails = createAsyncThunk(

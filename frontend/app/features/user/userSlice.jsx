@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Axios base config
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "http://localhost:5000/api";
 axios.defaults.withCredentials = true;
 
 // Helper for cleaner error extraction
@@ -12,7 +12,7 @@ const extractError = (error, fallback) =>
 // Thunks
 export const register = createAsyncThunk("user/register", async (userdata, { rejectWithValue }) => {
     try {
-        const response = await axios.post("/api/user/registerUser", userdata);
+        const response = await axios.post("/user/registerUser", userdata);
         return response.data;
     } catch (error) {
         return rejectWithValue(extractError(error, "Registration failed"));
@@ -21,7 +21,7 @@ export const register = createAsyncThunk("user/register", async (userdata, { rej
 
 export const login = createAsyncThunk("user/login", async (userdata, { rejectWithValue }) => {
     try {
-        const response = await axios.post("/api/user/loginUser", userdata);
+        const response = await axios.post("/user/loginUser", userdata);
         return response.data;
     } catch (error) {
         return rejectWithValue(extractError(error, "Login failed"));
@@ -30,7 +30,7 @@ export const login = createAsyncThunk("user/login", async (userdata, { rejectWit
 
 export const loadUser = createAsyncThunk("user/loadUser", async (_, { rejectWithValue }) => {
     try {
-        const response = await axios.get("/api/user/getuserDetails");
+        const response = await axios.get("/user/getuserDetails");
         return response.data;
     } catch (error) {
         return rejectWithValue(extractError(error, "Failed to load profile"));
@@ -39,7 +39,7 @@ export const loadUser = createAsyncThunk("user/loadUser", async (_, { rejectWith
 
 export const logout = createAsyncThunk("user/logout", async (_, { rejectWithValue }) => {
     try {
-        const response = await axios.post("/api/user/logout");
+        const response = await axios.post("/user/logout");
         return response.data;
     } catch (error) {
         return rejectWithValue(extractError(error, "Logout failed"));
@@ -48,7 +48,7 @@ export const logout = createAsyncThunk("user/logout", async (_, { rejectWithValu
 
 export const updateUser = createAsyncThunk("user/update", async (userdata, { rejectWithValue }) => {
     try {
-        const response = await axios.put("/api/user/updateProfile", userdata);
+        const response = await axios.put("/user/updateProfile", userdata);
         return response.data;
     } catch (error) {
         return rejectWithValue(extractError(error, "Profile update failed"));
@@ -57,7 +57,7 @@ export const updateUser = createAsyncThunk("user/update", async (userdata, { rej
 
 export const requestResetPassword = createAsyncThunk("user/requestResetPassword", async (userdata, { rejectWithValue }) => {
     try {
-        const response = await axios.post("/api/user/requestresetpassword", userdata);
+        const response = await axios.post("/user/requestresetpassword", userdata);
         return response.data;
     } catch (error) {
         return rejectWithValue(extractError(error, "Request reset password failed"));
@@ -66,25 +66,25 @@ export const requestResetPassword = createAsyncThunk("user/requestResetPassword"
 
 export const updatePassword = createAsyncThunk("user/updatePassword", async (userdata, { rejectWithValue }) => {
     try {
-        const response = await axios.put("/api/user/updatePassword", userdata);
+        const response = await axios.put("/user/updatePassword", userdata);
         return response.data;
     } catch (error) {
         return rejectWithValue(extractError(error, "Password update failed"));
     }
 });
 
-export const resetPassword =  createAsyncThunk(
-  'user/resetPassword',
-  async ({ token, password, confirmPassword }, thunkAPI) => {
-    try {
-      const { data } = await axios.put(`/api/user/resetPassword/${token}`,{ password, confirmPassword },);
-      return data.message;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || 'Reset failed');
-      console.log(error.response?.data?.message);
-      
+export const resetPassword = createAsyncThunk(
+    'user/resetPassword',
+    async ({ token, password, confirmPassword }, thunkAPI) => {
+        try {
+            const { data } = await axios.put(`/user/resetPassword/${token}`, { password, confirmPassword },);
+            return data.message;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response?.data?.message || 'Reset failed');
+            console.log(error.response?.data?.message);
+
+        }
     }
-  }
 );
 
 
@@ -210,8 +210,8 @@ const userSlice = createSlice({
                 state.loading = false;
                 state.success = true;
                 state.error = null;
-                state.user=null;
-                state.isAuthenticated=false
+                state.user = null;
+                state.isAuthenticated = false
             })
             .addCase(resetPassword.rejected, setRejected);
     },

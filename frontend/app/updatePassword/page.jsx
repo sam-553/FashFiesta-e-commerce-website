@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { IconEye, IconEyeOff, IconCheck, IconLoader2 } from '@tabler/icons-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updatePassword, userActions } from '../features/user/userSlice';
+import { logout, updatePassword, userActions } from '../features/user/userSlice';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
@@ -24,7 +24,6 @@ const UpdatePassword = () => {
     e.preventDefault();
 
 
-
     try {
       await dispatch(updatePassword({
         oldPassword,
@@ -33,7 +32,9 @@ const UpdatePassword = () => {
       })).unwrap();
 
       toast.success('Password updated successfully');
-      router.push('/userProfile')
+      dispatch(logout())
+      router.push('/login')
+     
       setOldPassword('');
       setNewPassword('');
       setConfirmNewPassword('');

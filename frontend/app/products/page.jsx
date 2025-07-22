@@ -21,6 +21,7 @@ const Products = () => {
     const [keyword, setKeyword] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [category, setCategory] = useState('');
+    const [loaded, setLoaded] = useState(false); // ✅ added to control fetch timing
 
     const { product, loading, error, totalpages } = useSelector((state) => state.product);
 
@@ -35,21 +36,24 @@ const Products = () => {
             setKeyword(kw);
             setCurrentPage(page);
             setCategory(cat);
+            setLoaded(true); // ✅ now ready to fetch
         }
     }, []);
 
     // Fetch products when filters change
     useEffect(() => {
-        dispatch(getproduct({ keyword, page: currentPage, category }));
-    }, [dispatch, keyword, currentPage, category]);
+        if (loaded) { // ✅ prevents premature fetch
+            dispatch(getproduct({ keyword, page: currentPage, category }));
+        }
+    }, [dispatch, keyword, currentPage, category, loaded]);
 
     // Error handling
     useEffect(() => {
-        if (!loading && product?.length === 0) {
+        if (!loading && loaded && product?.length === 0) {
             toast.dismiss();
             toast.error('No products found for this category');
         }
-    }, [loading, product]);
+    }, [loading, product, loaded]);
 
     useEffect(() => {
         if (error) {

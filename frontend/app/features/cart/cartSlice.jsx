@@ -9,7 +9,7 @@ export const addtoCart = createAsyncThunk(
   "cart/addtoCart",
   async ({ id, quantity }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`http://localhost:5000/api/product/getproductdetails/${id}`);
+      const { data } = await axios.get(`http://localhost:5000/apiproduct/getproductdetails/${id}`);
       return {
         product: data.product._id,
         name: data.product.name,
@@ -55,10 +55,10 @@ const cartSlice = createSlice({
         localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       }
     },
-    clearCart:(state)=>{
-     state.cartItems=[];
-     localStorage.removeItem('cartItems');
-     localStorage.removeItem('shippingInfo');
+    clearCart: (state) => {
+      state.cartItems = [];
+      localStorage.removeItem('cartItems');
+      localStorage.removeItem('shippingInfo');
 
     },
     saveShippingInfo: (state, action) => {
@@ -101,5 +101,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { removeError, removeMessage, removeFromCart, saveShippingInfo,clearCart } = cartSlice.actions;
+export const { removeError, removeMessage, removeFromCart, saveShippingInfo, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
