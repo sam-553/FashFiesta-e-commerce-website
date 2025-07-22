@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 // Always load .env for now
 if (process.env.NODE_ENV != 'PRODUCTION') {
-    dotenv.config({ path: "config/config.env" });
+    dotenv.config({ path: "backend/config/config.env" });
 }
 
 // Debug to ensure keys are loaded
