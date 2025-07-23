@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { FaStar } from 'react-icons/fa';
+
 
 
 
