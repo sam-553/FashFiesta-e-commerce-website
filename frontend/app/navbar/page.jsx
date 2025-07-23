@@ -51,10 +51,19 @@ const Navbar = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     const query = searchQuery.trim();
-    router.push(query ? `/products?keyword=${encodeURIComponent(query)}` : '/products');
+
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('category') || '';
+
+    const searchParams = new URLSearchParams();
+    if (query) searchParams.set('keyword', query);
+    if (category) searchParams.set('category', category);
+
+    router.push(`/products?${searchParams.toString()}`);
     setSearchQuery('');
     setIsMenuOpen(false);
-  };
+};
+
 
   const handleLogout = async () => {
     await dispatch(logout());

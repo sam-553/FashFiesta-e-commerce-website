@@ -38,20 +38,27 @@ const createProduct = handleasyncError(async (req, res) => {
 // Get all products with pagination and filters
 const getAllProduct = handleasyncError(async (req, res, next) => {
   const resultPerPage = 6;
+
+  // Initialize API features with search and filter
   const apiFeature = new APIFunctionality(Model.find(), req.query)
     .search()
     .filter();
 
+  // Count total products matching filters
   const filterQuery = apiFeature.query.clone();
   const productcount = await filterQuery.countDocuments();
-  const totalpages = Math.ceil(productcount / resultPerPage);
+  const totalpages = Math.ceil(productcount / resultPerPage) || 1; // prevent division by 0
 
+  // Page validation
   const page = Number(req.query.page) || 1;
-  if (page > totalpages && productcount > 0) {
-    return next(new HandleError("This page does not exist", 500));
+  if (totalpages > 0 && page > totalpages) {
+    return next(new HandleError("This page does not exist", 400));
   }
 
+  // Pagination
   apiFeature.pagination(resultPerPage);
+
+  // Execute query
   const product = await apiFeature.query;
 
   res.status(200).json({
@@ -63,6 +70,7 @@ const getAllProduct = handleasyncError(async (req, res, next) => {
     currentpage: page,
   });
 });
+
 
 // Update product
 const updateproduct = handleasyncError(async (req, res, next) => {

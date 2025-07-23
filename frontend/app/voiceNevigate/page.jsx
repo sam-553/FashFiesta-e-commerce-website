@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'app/features/user/userSlice';
+import { getproduct } from 'app/features/products/productSlice';
+import { toast } from 'react-toastify';
 
 const Ai = () => {
     const router = useRouter();
@@ -78,23 +80,20 @@ const Ai = () => {
                 const transcriptWords = transcriptRaw.split(/\s+/);
                 let matched = false;
 
-                if (transcriptRaw.match(/^(search|find|show|look for)\s+/)) {
-                    const searchKeyword = transcriptRaw.replace(/^(search|find|show|look for)/, '').trim();
-                    if (searchKeyword) {
-                        speak(`Searching for ${searchKeyword}`);
-                        router.push(`/products?keyword=${encodeURIComponent(searchKeyword)}`);
-                        matched = true;
-                    } else {
-                        speak('Please say what you want to search.');
-                        matched = true;
-                    }
+                // Always search even on single letters or words
+                let searchKeyword = transcriptRaw;
+                if (searchKeyword) {
+                    speak(`Searching for ${searchKeyword}`);
+                    dispatch(getproduct({ keyword: searchKeyword, page: 1, category: '' }));
+                    router.push(`/products?keyword=${encodeURIComponent(searchKeyword)}&page=1`);
+                    matched = true;
                 }
 
                 if (!matched) {
                     for (let route of voiceRoutes) {
                         for (let keyword of route.keywords) {
                             for (let word of transcriptWords) {
-                                if (keyword.includes(word) || word.includes(keyword)) {
+                                if (keyword.toLowerCase().includes(word.toLowerCase()) || word.toLowerCase().includes(keyword.toLowerCase())) {
                                     speak(route.message);
                                     router.push(route.path);
                                     matched = true;
@@ -118,8 +117,10 @@ const Ai = () => {
                         }
                         if (matched) break;
                     }
-                } if (!matched && transcriptRaw.includes('logout')) {
-                    dispatch(logout()); // make sure to import this from your userSlice
+                }
+
+                if (!matched && transcriptRaw.includes('logout')) {
+                    dispatch(logout());
                     speak('Logging you out now.');
                     router.push('/login');
                     matched = true;
@@ -137,7 +138,7 @@ const Ai = () => {
 
             recognitionRef.current = recognition;
         }
-    }, [router, speak, user]);
+    }, [router, speak, user, dispatch]);
 
     const handleClick = () => {
         if (recognitionRef.current) {

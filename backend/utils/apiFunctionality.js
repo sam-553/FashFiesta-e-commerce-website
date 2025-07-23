@@ -5,16 +5,33 @@ class APIFunctionality {
     }
 
     search() {
-        const keyword = this.queryStr.keyword
-            ? {
-                name: {
-                    $regex: this.queryStr.keyword,
-                    $options: "i"
-                }
-            }
-            : {};
+        if (this.queryStr.keyword) {
+            const keywordString = this.queryStr.keyword.replace(/\+/g, ' ').trim();
+            const words = keywordString.split(/\s+/);
 
-        this.query = this.query.find({ ...keyword });
+            const regexQueries = words.flatMap(word => {
+                if (word.length <= 2) return [];
+                const fuzzyPattern = word.split('').join('.*'); // Improved fuzzy
+                return [
+                    { name: { $regex: fuzzyPattern, $options: "i" } },
+                    { category: { $regex: fuzzyPattern, $options: "i" } },
+                    { description: { $regex: fuzzyPattern, $options: "i" } }
+                ];
+            });
+
+            if (regexQueries.length === 0 && keywordString.length > 0) {
+                const fallbackPattern = keywordString.split('').join('.*');
+                regexQueries.push(
+                    { name: { $regex: fallbackPattern, $options: "i" } },
+                    { category: { $regex: fallbackPattern, $options: "i" } },
+                    { description: { $regex: fallbackPattern, $options: "i" } }
+                );
+            }
+
+            if (regexQueries.length > 0) {
+                this.query = this.query.find({ $or: regexQueries });
+            }
+        }
         return this;
     }
 
@@ -33,12 +50,15 @@ class APIFunctionality {
             console.error("Error parsing query string:", err);
         }
 
+        if (parsedQuery.category) {
+            parsedQuery.category = { $regex: new RegExp(`^${parsedQuery.category}$`, 'i') };
+        }
+
         this.query = this.query.find({
             ...this.query.getFilter(),
             ...parsedQuery
         });
 
-        console.log("APPLIED FILTER:", this.query.getFilter()); // Debug during development
         return this;
     }
 

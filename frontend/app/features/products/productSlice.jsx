@@ -68,6 +68,7 @@ const ProductSlice = createSlice({
     totalpages: 0,
     reviewLoading: false,
     reviewSuccess: false,
+    
   },
   reducers: {
     removeError: (state) => {

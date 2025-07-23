@@ -23,8 +23,8 @@ const ProductCard = ({ product }) => {
   }
 
   return (
-    <div className="flex flex-wrap justify-center bg-white">
-      <div className="group w-[280px] bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] m-4">
+    <div className="flex flex-wrap justify-center bg-white ">
+      <div className="group w-[280px] bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] m-4 ">
         {/* Clickable Image */}
         <Link href={`/productDetails/${product._id}`} prefetch={false}>
           <div className="relative cursor-pointer h-[220px] w-full overflow-hidden rounded-t-3xl">

@@ -50,7 +50,7 @@ const Home = () => {
             <h2 className="text-4xl font-semibold mb-8 text-center text-gray-300 dark:text-gray-800 drop-shadow-sm">
               Trending Now
             </h2>
-            <div className="flex flex-wrap gap-14 w-full max-w-[1200px] p-4 mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-[1200px] p-4 mx-auto">
               {product.map((p) => (
                 <ProductCard product={p} key={p._id} />
               ))}
