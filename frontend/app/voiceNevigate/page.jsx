@@ -80,32 +80,23 @@ const Ai = () => {
                 const transcriptWords = transcriptRaw.split(/\s+/);
                 let matched = false;
 
-                // Always search even on single letters or words
-                let searchKeyword = transcriptRaw;
-                if (searchKeyword) {
-                    speak(`Searching for ${searchKeyword}`);
-                    dispatch(getproduct({ keyword: searchKeyword, page: 1, category: '' }));
-                    router.push(`/products?keyword=${encodeURIComponent(searchKeyword)}&page=1`);
-                    matched = true;
-                }
-
-                if (!matched) {
-                    for (let route of voiceRoutes) {
-                        for (let keyword of route.keywords) {
-                            for (let word of transcriptWords) {
-                                if (keyword.toLowerCase().includes(word.toLowerCase()) || word.toLowerCase().includes(keyword.toLowerCase())) {
-                                    speak(route.message);
-                                    router.push(route.path);
-                                    matched = true;
-                                    break;
-                                }
+                // Check route commands first
+                for (let route of voiceRoutes) {
+                    for (let keyword of route.keywords) {
+                        for (let word of transcriptWords) {
+                            if (keyword.toLowerCase().includes(word.toLowerCase()) || word.toLowerCase().includes(keyword.toLowerCase())) {
+                                speak(route.message);
+                                router.push(route.path);
+                                matched = true;
+                                break;
                             }
-                            if (matched) break;
                         }
                         if (matched) break;
                     }
+                    if (matched) break;
                 }
 
+                // Check FAQ commands if no route matched
                 if (!matched) {
                     for (let faq of faqCommands) {
                         for (let keyword of faq.keywords) {
@@ -119,6 +110,7 @@ const Ai = () => {
                     }
                 }
 
+                // Check logout command if no match
                 if (!matched && transcriptRaw.includes('logout')) {
                     dispatch(logout());
                     speak('Logging you out now.');
@@ -126,8 +118,17 @@ const Ai = () => {
                     matched = true;
                 }
 
+                // Perform search only if no match found
                 if (!matched) {
-                    speak('Sorry, I did not understand that. Please try again.');
+                    let searchKeyword = transcriptRaw;
+                    if (searchKeyword) {
+                        speak(`Searching for ${searchKeyword}`);
+                        dispatch(getproduct({ keyword: searchKeyword, page: 1, category: '' }));
+                        router.push(`/products?keyword=${encodeURIComponent(searchKeyword)}&page=1`);
+                        matched = true;
+                    } else {
+                        speak('Sorry, I did not understand that. Please try again.');
+                    }
                 }
 
                 setListening(false);

@@ -2,7 +2,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./provider/provider";
-import AiWrapper from "./aiWrapper";
+import Aiwrapper from "./aiwrapper/page";
+
 
 // ✅ Correct font initialization
 const geistSans = Geist({
@@ -26,7 +27,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
           {children}
-          <AiWrapper/>
+          <Aiwrapper/>
         </Providers>
       </body>
     </html>
