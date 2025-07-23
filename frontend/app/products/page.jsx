@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -13,7 +13,7 @@ import { getproduct } from '../features/products/productSlice';
 import productCategory from '../category/page';
 import ProductCard from '../productcard/page';
 
-const Products = () => {
+const ProductsContent = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -39,29 +39,22 @@ const Products = () => {
     }, [dispatch, keyword, currentPage, category]);
 
     useEffect(() => {
-    if (!loading && product?.length === 0) {
-        if (keyword && category) {
-            toast.info('No products found for this keyword in category, showing category only.');
+        if (!loading && product?.length === 0) {
             const params = new URLSearchParams(searchParams.toString());
-            params.delete('keyword');
-            params.set('page', '1');
-            router.push(`/products?${params.toString()}`);
-        } else if (category) {
-            toast.info('No products found in this category, showing all products.');
-            const params = new URLSearchParams(searchParams.toString());
-            params.delete('category');
-            params.set('page', '1');
-            router.push(`/products?${params.toString()}`);
-        } else if (keyword) {
-            toast.info('No products found for this keyword, showing all products.');
-            const params = new URLSearchParams(searchParams.toString());
-            params.delete('keyword');
+            if (keyword && category) {
+                toast.info('No products found for this keyword in category, showing category only.');
+                params.delete('keyword');
+            } else if (category) {
+                toast.info('No products found in this category, showing all products.');
+                params.delete('category');
+            } else if (keyword) {
+                toast.info('No products found for this keyword, showing all products.');
+                params.delete('keyword');
+            }
             params.set('page', '1');
             router.push(`/products?${params.toString()}`);
         }
-    }
-}, [loading, product, keyword, category]);
-
+    }, [loading, product, keyword, category, searchParams, router]);
 
     useEffect(() => {
         if (error) {
@@ -149,5 +142,11 @@ const Products = () => {
         </>
     );
 };
+
+const Products = () => (
+    <Suspense fallback={<Loader size={40} color="#4F46E5" />}>
+        <ProductsContent />
+    </Suspense>
+);
 
 export default Products;
