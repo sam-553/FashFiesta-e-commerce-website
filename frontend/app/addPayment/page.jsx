@@ -51,7 +51,7 @@ const PaymentPage = () => {
 
       // 1️⃣ Get Razorpay Key
       const { data: keyData } = await axios.get(
-        'http://localhost:5000/payment/getKey',
+        'http://localhost:5000/api/payment/getKey',
         config
       );
       const { Key } = keyData;
@@ -59,7 +59,7 @@ const PaymentPage = () => {
 
       // 2️⃣ Create Order
       const { data: orderData } = await axios.post(
-        'http://localhost:5000/payment/processPayment',
+        'http://localhost:5000/api/payment/processPayment',
         { amount },
         config
       );
@@ -82,7 +82,7 @@ const PaymentPage = () => {
         handler: async function (response) {
           try {
             const { data: verificationData } = await axios.post(
-              'http://localhost:5000/payment/paymentVerification',
+              'http://localhost:5000/api/payment/paymentVerification',
               {
                 razorpay_signature: response.razorpay_signature,
                 razorpay_payment_id: response.razorpay_payment_id,

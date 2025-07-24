@@ -15,28 +15,15 @@ const Home = () => {
   const dispatch = useDispatch();
   const { product, loading, error } = useSelector((state) => state.product);
 
-  // Check token on mount
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if (!token) {
-  //     toast.error('Login to continue');
-  //     router.push('/login');
-  //   }
-  // }, []);
-
-  // Fetch products
   useEffect(() => {
     dispatch(getproduct({ keyword: '' }));
   }, [dispatch]);
 
-  // Handle errors
   useEffect(() => {
     if (error) {
       toast.error(typeof error === 'string' ? error : error.message || 'Something went wrong');
     }
   }, [error]);
-
-
 
   return (
     <>
@@ -50,11 +37,12 @@ const Home = () => {
             <h2 className="text-4xl font-semibold mb-8 text-center text-gray-300 dark:text-gray-800 drop-shadow-sm">
               Trending Now
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-[1200px] p-4 mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full max-w-[1200px] p-8">
               {product.map((p) => (
-                <ProductCard product={p} key={p._id} />
+                <ProductCard product={p} key={p._id}  />
               ))}
             </div>
+            
           </div>
           <Footer />
         </>

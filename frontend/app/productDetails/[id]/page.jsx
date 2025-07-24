@@ -33,11 +33,14 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (id) dispatch(getproductDetails(id));
+
   }, [dispatch, id]);
 
   useEffect(() => {
     if (error) {
       toast.error(error);
+     
+      
       dispatch(removeError());
     }
   }, [error, dispatch]);
@@ -45,6 +48,8 @@ const ProductDetails = () => {
   useEffect(() => {
     if (cartError) {
       toast.error(cartError);
+      
+      
       dispatch(removeError());
     }
   }, [cartError, dispatch]);
@@ -149,7 +154,7 @@ const ProductDetails = () => {
                       alt={product.name || 'Product image'}
                       onMouseMove={handleZoomMove}
                       onMouseLeave={handleZoomLeave}
-                      className={`w-full h-full object-fill transition-transform duration-300 ${zoomImage ? 'scale-150' : 'scale-100'}`}
+                      className={`w-full h-full object-contain transition-transform duration-300 ${zoomImage ? 'scale-150' : 'scale-100'}`}
                       style={{ transformOrigin }}
                     />
                   </div>
@@ -162,7 +167,7 @@ const ProductDetails = () => {
                         src={img.url}
                         alt={`Thumbnail ${idx}`}
                         onMouseEnter={() => setActiveImage(img.url)}
-                        className={`h-20 w-20 object-fill rounded border cursor-pointer transition ${activeImage === img.url ? 'ring-2 ring-red-500' : 'hover:ring-2 hover:ring-gray-400'}`}
+                        className={`h-20 w-20 object-contain rounded border cursor-pointer transition ${activeImage === img.url ? 'ring-2 ring-red-500' : 'hover:ring-2 hover:ring-gray-400'}`}
                       />
                     ))}
                   </div>

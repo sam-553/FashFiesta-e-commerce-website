@@ -37,7 +37,7 @@ const createProduct = handleasyncError(async (req, res) => {
 
 // Get all products with pagination and filters
 const getAllProduct = handleasyncError(async (req, res, next) => {
-  const resultPerPage = 6;
+  const resultPerPage = 3;
 
   // Initialize API features with search and filter
   const apiFeature = new APIFunctionality(Model.find(), req.query)

@@ -9,7 +9,7 @@ export const addtoCart = createAsyncThunk(
   "cart/addtoCart",
   async ({ id, quantity }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`http://localhost:5000/apiproduct/getproductdetails/${id}`);
+      const { data } = await axios.get(`http://localhost:5000/api/product/getproductdetails/${id}`);
       return {
         product: data.product._id,
         name: data.product.name,
@@ -21,6 +21,8 @@ export const addtoCart = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || error.response?.data || "An error occurred"
+        
+        
       );
     }
   }

@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
                   src={product.image[0].url}
                   alt={product?.name || "Product Image"}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 ease-in-out"
+                  className="h-full w-full object-contain transition-transform duration-500 ease-in-out"
                 />
                 <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </>

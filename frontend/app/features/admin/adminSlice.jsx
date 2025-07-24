@@ -258,13 +258,16 @@ const adminSlice = createSlice({
             })
             .addCase(updateProduct.fulfilled, (state, action) => {
                 state.loading = false;
-                const updatedProduct = action.payload.product;
-                state.products = state.products.map((prod) =>
-                    prod._id === updatedProduct._id ? updatedProduct : prod
-                );
+                const updatedProduct = action.payload?.product;
+                if (updatedProduct && updatedProduct._id) {
+                    state.products = state.products.map((prod) =>
+                        prod._id === updatedProduct._id ? updatedProduct : prod
+                    );
+                }
                 state.success = action.payload?.success || true;
                 state.error = null;
             })
+
 
             .addCase(updateProduct.rejected, (state, action) => {
                 state.loading = false;

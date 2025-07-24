@@ -111,7 +111,7 @@ const ProductsContent = () => {
                 </div>
 
                 <div className="w-full md:w-3/4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                         {loading ? (
                             <div className="col-span-full flex justify-center items-center h-32">
                                 <Loader size={35} color="#4F46E5" />
@@ -120,6 +120,7 @@ const ProductsContent = () => {
                             product.map((item) => (
                                 <ProductCard product={item} key={item._id} />
                             ))
+
                         ) : (
                             <div className="col-span-full text-center text-gray-600">
                                 <NoProductFound keyword={keyword} />
