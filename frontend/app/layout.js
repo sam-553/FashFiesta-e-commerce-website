@@ -1,11 +1,12 @@
-// app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./provider/provider";
+
 import Aiwrapper from "./aiwrapper/page";
 
+// ✅ Dynamically import Aiwrapper without SSR
 
-// ✅ Correct font initialization
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,7 +28,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
           {children}
-          <Aiwrapper/>
+          <Aiwrapper />
         </Providers>
       </body>
     </html>
