@@ -42,7 +42,8 @@ const getAllProduct = handleasyncError(async (req, res, next) => {
   // Initialize API features with search and filter
   const apiFeature = new APIFunctionality(Model.find(), req.query)
     .search()
-    .filter();
+    .filter()
+   
 
   // Count total products matching filters
   const filterQuery = apiFeature.query.clone();

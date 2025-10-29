@@ -32,7 +32,7 @@ const Shipping = () => {
 
     else {
       dispatch(saveShippingInfo({ phone, pincode, country, state, city, address }))
-      toast.success('Form submitted successfully');
+      toast.success('Address added successfully');
       router.push('/confirmOrder')
     }
     // here you can dispatch shipping info to Redux or proceed to next step

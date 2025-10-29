@@ -168,7 +168,7 @@ const ProductList = () => {
                                             <img
                                                 src={product?.image?.[0]?.url || '/placeholder.jpg'}
                                                 alt={product?.name ?? 'Product Image'}
-                                                className="w-full h-40 object-cover transform hover:scale-105 transition duration-300"
+                                                className="w-full h-40 object-contain transform hover:scale-105 transition duration-300"
                                             />
                                         </div>
                                         <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>

@@ -48,21 +48,21 @@ const Navbar = () => {
     }
   }, [error, dispatch]);
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    const query = searchQuery.trim();
+//   const handleSearchSubmit = (e) => {
+//     e.preventDefault();
+//     const query = searchQuery.trim();
 
-    const params = new URLSearchParams(window.location.search);
-    const category = params.get('category') || '';
+//     const params = new URLSearchParams(window.location.search);
+//     const category = params.get('category') || '';
 
-    const searchParams = new URLSearchParams();
-    if (query) searchParams.set('keyword', query);
-    if (category) searchParams.set('category', category);
+//     const searchParams = new URLSearchParams();
+//     if (query) searchParams.set('keyword', query);
+//     if (category) searchParams.set('category', category);
 
-    router.push(`/products?${searchParams.toString()}`);
-    setSearchQuery('');
-    setIsMenuOpen(false);
-};
+//     router.push(`/products?${searchParams.toString()}`);
+//     setSearchQuery('');
+//     setIsMenuOpen(false);
+// };
 
 
   const handleLogout = async () => {
@@ -119,7 +119,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2 md:gap-6">
-            <form
+            {/* <form
               onSubmit={handleSearchSubmit}
               className="hidden lg:flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-full px-3 py-1.5"
             >
@@ -133,7 +133,7 @@ const Navbar = () => {
               <button type="submit">
                 <SearchIcon className="text-gray-700 dark:text-gray-300" />
               </button>
-            </form>
+            </form> */}
 
             <Link href="/cartItem" className="relative">
               <ShoppingCartIcon className="hover:text-blue-600 dark:hover:text-blue-400" />

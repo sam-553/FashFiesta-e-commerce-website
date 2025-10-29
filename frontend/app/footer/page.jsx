@@ -23,7 +23,7 @@ function Footer() {
           <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
           <a href="tel:+919865467888" className="flex justify-center sm:justify-start items-center text-gray-600 dark:text-gray-400 mb-2">
             <Phone fontSize="small" className="mr-2" />
-            +91 7619924344
+            +91 7619223388
           </a>
           <p className="flex justify-center sm:justify-start items-center text-gray-600 dark:text-gray-400">
             <Mail fontSize="small" className="mr-2" />
@@ -31,7 +31,7 @@ function Footer() {
               href="mailto: samtiwari9475@gmail.com"
               className="underline hover:text-blue-600 dark:hover:text-blue-400"
             >
-              samtiwari9475@gmail.com
+              fashfiesta9475@gmail.com
             </a>
           </p>
         </div>
