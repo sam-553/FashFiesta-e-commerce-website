@@ -1,15 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-
-
-   
-      dotenv.config({ path: "config" });
-   
-   
-
-
-
-
+ dotenv.config({ path: "./backend/config/config.env" }); 
 const connectDb=()=>{
     mongoose.connect(process.env.MONGO_URI)
     .then((result) => {

@@ -1,15 +1,6 @@
 import Razorpay from "razorpay";
-import dotenv from "dotenv";
-
-// Always load .env for now
-if (process.env.NODE_ENV != 'PRODUCTION') {
-    dotenv.config({ path: "backend/config/config.env" });
-}
-
-// Debug to ensure keys are loaded
-
-
-
+import dotenv from 'dotenv';
+ dotenv.config({ path: "./bqackend/config/config.env" }); 
 
 const instance = new Razorpay({
     key_id: process.env.RAZORPAY_API_KEY,

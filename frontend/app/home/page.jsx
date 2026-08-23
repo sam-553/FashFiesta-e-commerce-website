@@ -9,6 +9,8 @@ import { getproduct } from 'app/features/products/productSlice';
 import Loader from 'app/loader/page';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import Refubnishedproduct from 'app/refubnishedPrduct/page';
+
 
 const Home = () => {
   const router = useRouter();
@@ -40,9 +42,18 @@ const Home = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full max-w-[1200px] p-8">
               {product.map((p) => (
                 <ProductCard product={p} key={p._id}  />
+
               ))}
             </div>
-            
+             <h2 className="text-4xl font-semibold mb-8 text-center text-gray-300 dark:text-gray-800 drop-shadow-sm">
+             Refubnishedproduct
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full max-w-[1200px] p-8">
+              {product.map((p) => (
+                <Refubnishedproduct product={p} key={p._id}  />
+                
+              ))}
+            </div>
           </div>
           <Footer />
         </>

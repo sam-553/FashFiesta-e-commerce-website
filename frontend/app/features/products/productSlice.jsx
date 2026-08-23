@@ -6,20 +6,20 @@ const BASE_URL = 'http://localhost:5000/api/product';
 
 // Fetch product list with optional filters
 export const getproduct = createAsyncThunk(
-    "product/getproduct",
-    async ({ keyword = "", page = 1, category = "" }, { rejectWithValue }) => {
-        try {
-            const queryParams = new URLSearchParams();
-            if (keyword) queryParams.append("keyword", keyword);
-            if (category) queryParams.append("category", category);
-            queryParams.append("page", page);
+  "product/getproduct",
+  async ({ keyword = "", page = 1, category = "" }, { rejectWithValue }) => {
+    try {
+      const queryParams = new URLSearchParams();
+      if (keyword) queryParams.append("keyword", keyword);
+      if (category) queryParams.append("category", category);
+      queryParams.append("page", page);
 
-            const { data } = await axios.get(`${BASE_URL}/getAllProduct?${queryParams.toString()}`);
-            return data;
-        } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "An error occurred");
-        }
+      const { data } = await axios.get(`${BASE_URL}/getAllProduct?${queryParams.toString()}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "An error occurred");
     }
+  }
 );
 
 

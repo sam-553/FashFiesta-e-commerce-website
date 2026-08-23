@@ -1,7 +1,6 @@
 import Model from '../model/usermodel.js';
 import handleasyncError from '../middlewear/handleasyncError.js';
 import sendToken from '../utils/jwtToken.js';
-// Ensure this file exists and exports correctly
 import sendEmail from '../utils/sendEmail.js';
 import crypto from 'crypto';
 import cloudinaryModule from 'cloudinary';
@@ -48,7 +47,6 @@ const userRegister = handleasyncError(async (req, res, next) => {
 const loginUser = handleasyncError(async (req, res, next) => {
   const { email, password } = req.body;
 
-
   if (!email || !password) {
     return next(new HandleError("Email or password cannot be empty", 400));
   }
@@ -59,16 +57,17 @@ const loginUser = handleasyncError(async (req, res, next) => {
     return next(new HandleError("Invalid Email or password", 401));
   }
 
-  // You should also compare passwords here with bcrypt (not shown)
-  const isPasswordMatched = await bcrypt.compare(password, user.password);
-  if (!isPasswordMatched) {
+  // ✅ FIXED HERE (was comparePassword → now verifyPassword)
+  const isMatch = await user.verifyPassword(password);
+
+  if (!isMatch) {
     return next(new HandleError("Invalid Email or password", 401));
   }
 
+  user.password = undefined;
 
-  return sendToken(user, 200, res);
+  sendToken(user, 200, res);
 });
-
 // Logout User
 const logOut = handleasyncError(async (req, res, next) => {
   res.cookie("token", null, {

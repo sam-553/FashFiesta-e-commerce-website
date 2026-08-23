@@ -21,8 +21,8 @@ export const addtoCart = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || error.response?.data || "An error occurred"
-        
-        
+
+
       );
     }
   }

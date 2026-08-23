@@ -3,9 +3,9 @@ export const dynamic = 'force-dynamic';
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Rating from 'app/rating/page'; 
+import Rating from 'app/rating/page';
 
-const ProductCard = ({ product }) => {
+const Refubnishedproduct = ({ product }) => {
   
   const [rating, setRating] = useState(product?.ratings ?? 0);
 
@@ -87,4 +87,4 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default Refubnishedproduct;

@@ -44,7 +44,7 @@ const Banner = () => {
   }, [banners]);
 
   return (
-    <div className="relative w-full mt-24 overflow-hidden rounded-md h-[450px] sm:h-[300px] max-sm:h-[200px]">
+    <div className="relative w-full mt-28 overflow-hidden rounded-md h-[450px] sm:h-[300px] max-sm:h-[200px]">
       {/* Image Slider */}
       <div
         className="flex h-full transition-transform duration-1000 ease-in-out"

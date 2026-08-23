@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Link from 'next/link';
 import React, { useState, useEffect, useRef } from 'react';
@@ -24,11 +24,15 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+
   const router = useRouter();
   const dispatch = useDispatch();
   const profileRef = useRef(null);
 
-  const { isAuthenticated, user, error, loading } = useSelector((state) => state.user);
+  const { isAuthenticated, user, error, loading } = useSelector(
+    (state) => state.user
+  );
+
   const { cartItems } = useSelector((state) => state.cart);
 
   useEffect(() => {
@@ -48,22 +52,17 @@ const Navbar = () => {
     }
   }, [error, dispatch]);
 
-//   const handleSearchSubmit = (e) => {
-//     e.preventDefault();
-//     const query = searchQuery.trim();
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
 
-//     const params = new URLSearchParams(window.location.search);
-//     const category = params.get('category') || '';
+    const query = searchQuery.trim();
 
-//     const searchParams = new URLSearchParams();
-//     if (query) searchParams.set('keyword', query);
-//     if (category) searchParams.set('category', category);
+    if (!query) return;
 
-//     router.push(`/products?${searchParams.toString()}`);
-//     setSearchQuery('');
-//     setIsMenuOpen(false);
-// };
-
+    router.push(`/products?keyword=${query}`);
+    setSearchQuery('');
+    setIsMenuOpen(false);
+  };
 
   const handleLogout = async () => {
     await dispatch(logout());
@@ -78,12 +77,14 @@ const Navbar = () => {
         setIsProfileOpen(false);
       }
     };
+
     if (isProfileOpen) {
       document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
     }
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, [isProfileOpen]);
 
   return (
@@ -97,6 +98,7 @@ const Navbar = () => {
 
       <nav className="fixed top-0 w-full bg-gray-100 dark:bg-gray-900 shadow-md z-[1000] text-gray-900 dark:text-white">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          {/* Logo */}
           <Link href="/">
             <span
               onClick={() => setIsMenuOpen(false)}
@@ -106,11 +108,15 @@ const Navbar = () => {
             </span>
           </Link>
 
+          {/* Desktop Navigation */}
           <div className="hidden md:flex ml-6 flex-1">
             <ul className="flex gap-8 items-center">
               {navLinks.map(({ label, href }) => (
                 <li key={href}>
-                  <Link href={href} className="hover:text-blue-600 dark:hover:text-blue-400">
+                  <Link
+                    href={href}
+                    className="hover:text-blue-600 dark:hover:text-blue-400"
+                  >
                     {label}
                   </Link>
                 </li>
@@ -118,23 +124,9 @@ const Navbar = () => {
             </ul>
           </div>
 
+          {/* Right Side */}
           <div className="flex items-center gap-2 md:gap-6">
-            {/* <form
-              onSubmit={handleSearchSubmit}
-              className="hidden lg:flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-full px-3 py-1.5"
-            >
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search..."
-                className="bg-transparent text-sm text-gray-900 dark:text-white outline-none"
-              />
-              <button type="submit">
-                <SearchIcon className="text-gray-700 dark:text-gray-300" />
-              </button>
-            </form> */}
-
+            {/* Cart */}
             <Link href="/cartItem" className="relative">
               <ShoppingCartIcon className="hover:text-blue-600 dark:hover:text-blue-400" />
               <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs font-semibold w-5 h-5 rounded-full flex items-center justify-center">
@@ -142,6 +134,7 @@ const Navbar = () => {
               </span>
             </Link>
 
+            {/* User */}
             {loading ? (
               <div className="w-8 h-8 bg-gray-300 dark:bg-gray-700 rounded-full animate-pulse" />
             ) : !isAuthenticated ? (
@@ -156,9 +149,13 @@ const Navbar = () => {
                   className="w-8 h-8 rounded-full cursor-pointer border border-gray-300 dark:border-gray-600"
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                 />
+
                 {isProfileOpen && (
                   <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 shadow-lg rounded p-2 min-w-[160px] z-[1001]">
-                    <p className="text-sm text-gray-800 dark:text-gray-200 px-2 truncate">{user?.name}</p>
+                    <p className="text-sm text-gray-800 dark:text-gray-200 px-2 truncate">
+                      {user?.name}
+                    </p>
+
                     {user?.role === 'admin' ? (
                       <Link
                         href="/adminDashboard"
@@ -176,6 +173,7 @@ const Navbar = () => {
                         Profile
                       </Link>
                     )}
+
                     <button
                       onClick={handleLogout}
                       className="block text-sm text-left w-full px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
@@ -187,12 +185,17 @@ const Navbar = () => {
               </div>
             )}
 
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden">
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden"
+            >
               {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
             </button>
           </div>
         </div>
 
+        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden bg-gray-100 dark:bg-gray-800 px-6 py-4 space-y-4">
             {navLinks.map(({ label, href }) => (
@@ -205,6 +208,7 @@ const Navbar = () => {
                 {label}
               </Link>
             ))}
+
             <form
               onSubmit={handleSearchSubmit}
               className="flex items-center gap-2 bg-white dark:bg-gray-700 px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded shadow-sm"
